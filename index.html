@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>SpamShare</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    input { padding: 5px; width: 300px; }
+    button { padding: 5px 10px; }
+    ul { margin-top: 20px; }
+    li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>SpamShare</h1>
+  <form id="share-form">
+    <input type="text" id="link" placeholder="Enter a link" required />
+    <button type="submit">Share</button>
+  </form>
+  <ul id="shared-links"></ul>
+
+  <script>
+    async function fetchLinks() {
+      const res = await fetch("https://YOUR_RENDER_BACKEND.onrender.com/links");
+      const data = await res.json();
+      const list = document.getElementById("shared-links");
+      list.innerHTML = "";
+      data.forEach(link => {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+        list.appendChild(li);
+      });
+    }
+
+    document.getElementById("share-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const link = document.getElementById("link").value;
+      await fetch("https://YOUR_RENDER_BACKEND.onrender.com/links", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ link })
+      });
+      document.getElementById("link").value = "";
+      fetchLinks();
+    });
+
+    fetchLinks();
+  </script>
+</body>
+</html>
