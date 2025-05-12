@@ -21,7 +21,7 @@
 
   <script>
     async function fetchLinks() {
-      const res = await fetch("https://YOUR_RENDER_BACKEND.onrender.com/links");
+      const res = await fetch("https://spamshare-yraxoxo.onrender.com");
       const data = await res.json();
       const list = document.getElementById("shared-links");
       list.innerHTML = "";
@@ -35,7 +35,7 @@
     document.getElementById("share-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const link = document.getElementById("link").value;
-      await fetch("https://YOUR_RENDER_BACKEND.onrender.com/links", {
+      await fetch("https://spamshare-yraxoxo.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ link })
